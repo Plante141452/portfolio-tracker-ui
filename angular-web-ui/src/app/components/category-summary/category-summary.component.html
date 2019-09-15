@@ -1,0 +1,23 @@
+<mat-accordion>
+    <div *ngIf="category.categories">
+        <mat-expansion-panel *ngFor='let nestedCategory of category.categories'>
+            <mat-expansion-panel-header>
+                {{nestedCategory.name}}
+            </mat-expansion-panel-header>
+
+            <app-category-summary [category]="nestedCategory"></app-category-summary>
+
+        </mat-expansion-panel>
+    </div>
+
+    <div *ngIf="category.stocks">
+        <mat-expansion-panel *ngFor='let stock of category.stocks'>
+            <mat-expansion-panel-header>
+                {{stock.symbol}}
+            </mat-expansion-panel-header>
+
+            This is where stock data would be!
+
+        </mat-expansion-panel>
+    </div>
+</mat-accordion>

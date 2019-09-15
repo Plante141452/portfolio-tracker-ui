@@ -18,7 +18,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.http.get('http://localhost/PortfolioTrackerApi/api/users/1/portfolios').subscribe(data => {
       this.portfolios = data.json();
-      //test
     }, error => {
       console.log('There was an error generating the proper GUID on the server', error);
     }, () => console.log('complete'));

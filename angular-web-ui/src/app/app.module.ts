@@ -2,24 +2,29 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { DisplayUserDataComponent } from './display-user-data/display-user-data.component';
+import { CategorySummaryComponent, DashboardComponent } from './components/components';
+import { AppMaterialModule } from './app-material.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
-    DisplayUserDataComponent
+    CategorySummaryComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    BrowserAnimationsModule,
+
+    AppMaterialModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
