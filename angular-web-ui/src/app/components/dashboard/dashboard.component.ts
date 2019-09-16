@@ -10,9 +10,9 @@ import { Portfolio, Quote, StockHistory } from 'src/app/models/models';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  portfolios: Portfolio[] = [];
-  quotes: Quote[] = [];
-  history: StockHistory[] = [];
+  portfolios: Portfolio[];
+  quotes: Quote[];
+  history: StockHistory[];
 
   constructor(private http: Http, private router: Router) {
   }
