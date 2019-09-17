@@ -1,3 +1,3 @@
-<div *ngFor="let portfolio of portfolios">
-    <app-category-summary [category]="portfolio" [quotes]="quotes" [stockHistory]="history"></app-category-summary>
-</div>
+<app-category-summary [category]="portfolio" [quotes]="quotes" [stockHistory]="history"></app-category-summary>
+<button mat-button (click)="rebalance()">Rebalance</button>
+<button mat-button (click)="update()">Update</button>
