@@ -14,6 +14,9 @@ export class DashboardComponent implements OnInit {
   quotes: Quote[];
   history: StockHistory[];
 
+  currentValue: number;
+  percentChange: number;
+
   constructor(private http: Http, private router: Router) {
   }
 
@@ -35,38 +38,51 @@ export class DashboardComponent implements OnInit {
     }, () => console.log('complete'));
   }
 
-  getPortfolios() {
+  async getPortfolios() {
     const portfolioId = '5d80d0587d2d4657d8e1fe8f';
-    this.http.get(`http://localhost/PortfolioTrackerApi/api/portfolios/${portfolioId}`).subscribe(data => {
-      this.portfolio = data.json();
+    const data = await this.http.get(`http://localhost/PortfolioTrackerApi/api/portfolios/${portfolioId}`).toPromise();
 
-      this.getQuotes();
-      this.getHistory();
-    }, error => {
-      console.log('There was an error generating the proper GUID on the server', error);
-    }, () => console.log('complete'));
+    this.portfolio = data.json();
+
+    const quotes = this.getQuotes();
+    const history = this.getHistory();
+
+    await quotes;
+    await history;
+
+    this.getPercentChange();
   }
 
-  getQuotes() {
+  getPercentChange() {
+    this.currentValue = 0;
+    let previousValue = 0;
+
+    for (const stock of this.portfolio.allStocks) {
+      const stockHistory = this.history.find(h => h.symbol === stock.symbol);
+      const quote = this.quotes.find(q => q.symbol === stock.symbol);
+      const previousPrice = stockHistory.history[0].adjustedClose;
+
+      this.currentValue += stock.currentShares * quote.price;
+      previousValue += stock.currentShares * previousPrice;
+    }
+
+    this.percentChange = (this.currentValue / previousValue) - 1;
+  }
+
+  async getQuotes() {
     const symbols = this.portfolio.allStocks.map(s => s.symbol).filter((v, i, a) => a.indexOf(v) === i);
     const symbolsString = symbols.reduce((s1, s2) => `${s1},${s2}`);
 
-    this.http.get(`http://localhost/PortfolioTrackerApi/api/quotes?symbols=${symbolsString}`).subscribe(data => {
-      this.quotes = data.json();
-    }, error => {
-      console.log('There was an error generating the proper GUID on the server', error);
-    }, () => console.log('complete'));
+    const data = await this.http.get(`http://localhost/PortfolioTrackerApi/api/quotes?symbols=${symbolsString}`).toPromise();
+    this.quotes = data.json();
   }
 
-  getHistory() {
+  async getHistory() {
     const symbols = this.portfolio.allStocks.map(s => s.symbol).filter((v, i, a) => a.indexOf(v) === i);
     const symbolsString = symbols.reduce((s1, s2) => `${s1},${s2}`);
 
-    this.http.get(`http://localhost/PortfolioTrackerApi/api/stocks?symbols=${symbolsString}`).subscribe(data => {
-      this.history = data.json();
-    }, error => {
-      console.log('There was an error generating the proper GUID on the server', error);
-    }, () => console.log('complete'));
+    const data = await this.http.get(`http://localhost/PortfolioTrackerApi/api/stocks?symbols=${symbolsString}`).toPromise();
+    this.history = data.json();
   }
 }
 

@@ -1,3 +1,9 @@
-<app-category-summary [category]="portfolio" [quotes]="quotes" [stockHistory]="history"></app-category-summary>
-<button mat-button (click)="rebalance()">Rebalance</button>
-<button mat-button (click)="update()">Update</button>
+<div style='display: flex;'>
+    <div *ngIf="currentValue">${{currentValue.toFixed(2)}}</div>
+    <div *ngIf="percentChange" style="margin-left: auto">{{percentChange.toFixed(2)}}%</div>
+</div>
+<div>
+    <app-category-summary [category]="portfolio" [quotes]="quotes" [stockHistory]="history"></app-category-summary>
+    <button mat-button (click)="rebalance()">Rebalance</button>
+    <button mat-button (click)="update()">Update</button>
+</div>
