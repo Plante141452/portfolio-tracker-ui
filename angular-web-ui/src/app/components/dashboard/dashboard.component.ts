@@ -15,7 +15,10 @@ export class DashboardComponent implements OnInit {
   history: StockHistory[];
 
   currentValue: number;
+  valueChange: number;
   percentChange: number;
+
+  mode = 'W';
 
   constructor(private http: Http, private router: Router) {
   }
@@ -60,12 +63,23 @@ export class DashboardComponent implements OnInit {
     for (const stock of this.portfolio.allStocks) {
       const stockHistory = this.history.find(h => h.symbol === stock.symbol);
       const quote = this.quotes.find(q => q.symbol === stock.symbol);
-      const previousPrice = stockHistory.history[0].adjustedClose;
+      let previousPrice = 0;
+
+      if (this.mode === 'W') {
+        previousPrice = stockHistory.history[0].adjustedClose;
+      } else if (this.mode === 'M') {
+        const index = 3 > stockHistory.history.length ? stockHistory.history.length - 1 : 3;
+        previousPrice = stockHistory.history[index].adjustedClose;
+      } else {
+        const index = 51 > stockHistory.history.length ? stockHistory.history.length - 1 : 51;
+        previousPrice = stockHistory.history[index].adjustedClose;
+      }
 
       this.currentValue += stock.currentShares * quote.price;
       previousValue += stock.currentShares * previousPrice;
     }
 
+    this.valueChange = this.currentValue - previousValue;
     this.percentChange = (this.currentValue / previousValue) - 1;
   }
 

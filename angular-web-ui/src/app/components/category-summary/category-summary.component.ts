@@ -14,6 +14,8 @@ export class CategorySummaryComponent implements OnInit {
   _stockHistory: StockHistory[];
   // tslint:enable:variable-name
 
+  @Input() mode: string;
+
   get category(): Category { return this._category; }
   @Input() set category(value: Category) {
     this._category = value;
@@ -46,10 +48,22 @@ export class CategorySummaryComponent implements OnInit {
 
     let totalCategoryValue = 0;
 
+    this.stockMetrics = {};
     for (const stock of this.category.allStocks) {
       const stockHistory = this.stockHistory.find(sh => sh.symbol === stock.symbol);
       const quote = this.quotes.find(q => q.symbol === stock.symbol);
-      const previousPrice = stockHistory.history[0].adjustedClose;
+
+      let previousPrice = 0;
+
+      if (this.mode === 'W') {
+        previousPrice = stockHistory.history[0].adjustedClose;
+      } else if (this.mode === 'M') {
+        const index = 3 > stockHistory.history.length ? stockHistory.history.length - 1 : 3;
+        previousPrice = stockHistory.history[index].adjustedClose;
+      } else {
+        const index = 51 > stockHistory.history.length ? stockHistory.history.length - 1 : 51;
+        previousPrice = stockHistory.history[index].adjustedClose;
+      }
 
       this.stockMetrics[stock.symbol] = {
         stock,
@@ -74,6 +88,7 @@ export class CategorySummaryComponent implements OnInit {
       return;
     }
 
+    this.categoryMetrics = {};
     for (const category of this.category.categories) {
       const categoryStocks = Object.values(this.stockMetrics).filter(sm => !!category.allStocks.find(s => s.symbol === sm.stock.symbol));
 

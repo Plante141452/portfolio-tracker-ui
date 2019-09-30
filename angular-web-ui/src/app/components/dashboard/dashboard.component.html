@@ -1,9 +1,18 @@
 <div style='display: flex;'>
-    <div *ngIf="currentValue">${{currentValue.toFixed(2)}}</div>
-    <div *ngIf="percentChange" style="margin-left: auto">{{percentChange.toFixed(2)}}%</div>
+    <div>{{mode}}</div>
+    <div style="margin-left: auto">
+        <button mat-button (click)="mode = 'Y';update();">Y</button>
+        <button mat-button (click)="mode = 'M';update();">M</button>
+        <button mat-button (click)="mode = 'W';update();">W</button>
+    </div>
+</div>
+<div style='display: flex;'>
+    <div *ngIf="currentValue">${{currentValue.toFixed(2)}} {{valueChange > 0 ? '+' : '' }}{{valueChange.toFixed(2)}}
+    </div>
+    <div *ngIf="percentChange" style="margin-left: auto">{{(percentChange * 100).toFixed(2)}}%</div>
 </div>
 <div>
-    <app-category-summary [category]="portfolio" [quotes]="quotes" [stockHistory]="history"></app-category-summary>
+    <app-category-summary [category]="portfolio" [quotes]="quotes" [stockHistory]="history" [mode]="mode"></app-category-summary>
     <button mat-button (click)="rebalance()">Rebalance</button>
     <button mat-button (click)="update()">Update</button>
 </div>

@@ -1,5 +1,5 @@
 <mat-accordion *ngIf="category">
-    <div *ngIf="category.categories">
+    <div *ngIf="category.categories && categoryMetrics">
         <mat-expansion-panel *ngFor='let nestedCategory of category.categories'>
             <mat-expansion-panel-header *ngIf="categoryMetrics[nestedCategory.name]">
                 {{nestedCategory.name}}
@@ -7,13 +7,13 @@
                 {{categoryMetrics[nestedCategory.name].percentChange.toFixed(2)}}%
             </mat-expansion-panel-header>
 
-            <app-category-summary [category]="nestedCategory" [quotes]="quotes" [stockHistory]="stockHistory">
+            <app-category-summary [category]="nestedCategory" [quotes]="quotes" [stockHistory]="stockHistory" [mode]="mode">
             </app-category-summary>
 
         </mat-expansion-panel>
     </div>
 
-    <div *ngIf="category.stocks">
+    <div *ngIf="category.stocks && stockMetrics">
         <mat-expansion-panel *ngFor='let stock of category.stocks'>
             <mat-expansion-panel-header *ngIf="stockMetrics[stock.symbol]">
                 {{stock.symbol}}
