@@ -31,22 +31,19 @@ export class DashboardComponent implements OnInit {
     this.getPortfolios();
   }
 
-  rebalance() {
+  async rebalance() {
     const portfolioId = '5d80d0587d2d4657d8e1fe8f';
-    this.http.get(`http://localhost/PortfolioTrackerApi/api/portfolios/${portfolioId}/rebalance`).subscribe(data => {
-      const results: any = data.json();
-      const actions = results.actions.filter(d => d.amount > 1).map(d => {
-        return {
-          symbol: d.symbol,
-          actionType: d.actionType,
-          shares: d.amount,
-          total: d.amount * this.quotes.find(q => q.symbol === d.symbol).price
-        };
-      });
-      console.log(actions);
-    }, error => {
-      console.log('There was an error generating the proper GUID on the server', error);
-    }, () => console.log('complete'));
+    const data = await this.http.get(`http://localhost/PortfolioTrackerApi/api/portfolios/${portfolioId}/rebalance`).toPromise();
+    const results: any = data.json();
+    const actions = results.actions.filter(d => d.amount > 1).map(d => {
+      return {
+        symbol: d.symbol,
+        actionType: d.actionType,
+        shares: d.amount,
+        total: d.amount * this.quotes.find(q => q.symbol === d.symbol).price
+      };
+    });
+    console.log(actions);
   }
 
   async getPortfolios() {
@@ -55,7 +52,7 @@ export class DashboardComponent implements OnInit {
 
     this.portfolio = data.json();
 
-    const quotes = this.getQuotes();
+    const quotes = await this.getQuotes();
     const history = this.getHistory();
 
     await quotes;
