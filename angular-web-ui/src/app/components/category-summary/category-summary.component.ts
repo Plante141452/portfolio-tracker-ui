@@ -1,11 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 
 import { Category, Quote, StockHistory, StockAllocation } from 'src/app/models/models';
 
 @Component({
   selector: 'app-category-summary',
   templateUrl: './category-summary.component.html',
-  styleUrls: ['./category-summary.component.scss']
+  styleUrls: ['./category-summary.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CategorySummaryComponent implements OnInit {
   // tslint:disable:variable-name
@@ -14,6 +15,7 @@ export class CategorySummaryComponent implements OnInit {
   _stockHistory: StockHistory[];
   // tslint:enable:variable-name
 
+  @Input() edit: boolean;
   @Input() mode: string;
 
   get category(): Category { return this._category; }

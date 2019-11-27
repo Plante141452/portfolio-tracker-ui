@@ -1,4 +1,4 @@
-<div style='display: flex;'>
+<div *ngIf="!edit" style='display: flex;'>
     <div>{{mode}}</div>
     <div style="margin-left: auto">
         <button mat-button (click)="mode = 'Y';update();">Y</button>
@@ -12,7 +12,11 @@
     <div *ngIf="percentChange" style="margin-left: auto">{{(percentChange * 100).toFixed(2)}}%</div>
 </div>
 <div>
-    <app-category-summary [category]="portfolio" [quotes]="quotes" [stockHistory]="history" [mode]="mode"></app-category-summary>
-    <button mat-button (click)="rebalance()">Rebalance</button>
-    <button mat-button (click)="update()">Update</button>
+    <app-category-summary [category]="portfolio" [quotes]="quotes" [stockHistory]="history" [edit]="edit" [mode]="mode">
+    </app-category-summary>
+    <button *ngIf="!edit" mat-button (click)="edit = !edit;">Edit</button>
+    <button *ngIf="!edit" mat-button (click)="rebalance()">Rebalance</button>
+    <button *ngIf="!edit" mat-button (click)="update()">Update</button>
+    <button *ngIf="edit" mat-button (click)="edit = !edit;save();">Save</button>
+    <button *ngIf="edit" mat-button (click)="edit = !edit;">Cancel</button>
 </div>

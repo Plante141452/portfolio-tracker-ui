@@ -2,27 +2,37 @@
     <div *ngIf="category.categories && categoryMetrics">
         <mat-expansion-panel *ngFor='let nestedCategory of category.categories'>
             <mat-expansion-panel-header *ngIf="categoryMetrics[nestedCategory.name]">
-                {{nestedCategory.name}}
-                {{categoryMetrics[nestedCategory.name].percentOfCategory.toFixed(2)}}%
-                {{categoryMetrics[nestedCategory.name].percentChange.toFixed(2)}}%
+                <div style="margin-right: auto;">
+                    {{nestedCategory.name}}
+                </div>
+                <div>
+                    {{categoryMetrics[nestedCategory.name].percentOfCategory.toFixed(2)}}%
+                    {{categoryMetrics[nestedCategory.name].percentChange.toFixed(2)}}%
+                </div>
             </mat-expansion-panel-header>
 
-            <app-category-summary [category]="nestedCategory" [quotes]="quotes" [stockHistory]="stockHistory" [mode]="mode">
+            <app-category-summary [category]="nestedCategory" [quotes]="quotes" [stockHistory]="stockHistory"
+                [edit]="edit" [mode]="mode">
             </app-category-summary>
 
         </mat-expansion-panel>
     </div>
 
-    <div *ngIf="category.stocks && stockMetrics">
-        <mat-expansion-panel *ngFor='let stock of category.stocks'>
-            <mat-expansion-panel-header *ngIf="stockMetrics[stock.symbol]">
-                {{stock.symbol}}
-                {{stockMetrics[stock.symbol].percentOfCategory.toFixed(2)}}%
-                {{stockMetrics[stock.symbol].percentChange.toFixed(2)}}%
-            </mat-expansion-panel-header>
+    <div *ngIf="category.stocks && stockMetrics" style="display: flex;flex-direction: column;">
+        <div *ngFor='let stock of category.stocks'>
+            <div *ngIf="stockMetrics[stock.symbol]" style="display: flex;flex-direction: row;">
+                <div style="margin-right: auto;">
+                    {{stock.symbol}}
+                </div>
+                <div *ngIf="!edit">
+                    {{stockMetrics[stock.symbol].percentOfCategory.toFixed(2)}}%
+                    {{stockMetrics[stock.symbol].percentChange.toFixed(2)}}%
+                </div>
+                <input *ngIf="edit" matInput [value]="stock.desiredAmount" />
+            </div>
 
-            This is where stock data would be!
+            <!-- This is where stock data would be! -->
 
-        </mat-expansion-panel>
+        </div>
     </div>
 </mat-accordion>

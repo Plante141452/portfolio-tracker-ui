@@ -18,6 +18,8 @@ export class DashboardComponent implements OnInit {
   valueChange: number;
   percentChange: number;
 
+  edit: boolean;
+
   mode = 'W';
 
   constructor(private http: Http, private router: Router) {
@@ -29,6 +31,10 @@ export class DashboardComponent implements OnInit {
 
   update() {
     this.getPortfolios();
+  }
+
+  save() {
+    //eventually save
   }
 
   async rebalance() {
