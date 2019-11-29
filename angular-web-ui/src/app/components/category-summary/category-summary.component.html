@@ -2,12 +2,16 @@
     <div *ngIf="category.categories && categoryMetrics">
         <mat-expansion-panel *ngFor='let nestedCategory of category.categories'>
             <mat-expansion-panel-header *ngIf="categoryMetrics[nestedCategory.name]">
-                <div style="margin-right: auto;">
-                    {{nestedCategory.name}}
-                </div>
-                <div>
-                    {{categoryMetrics[nestedCategory.name].percentOfCategory.toFixed(2)}}%
-                    {{categoryMetrics[nestedCategory.name].percentChange.toFixed(2)}}%
+                <div class="category-info-container">
+                    <div class="category-name-label">
+                        {{nestedCategory.name}}
+                    </div>
+                    <div class="category-percent-label">
+                        {{categoryMetrics[nestedCategory.name].percentOfCategory.toFixed(2)}}%
+                    </div>
+                    <div [class]="'category-change-label ' + (categoryMetrics[nestedCategory.name].percentChange > 0 ? 'green' : 'red')">
+                        {{categoryMetrics[nestedCategory.name].percentChange > 0 ? '+' : '' }}{{categoryMetrics[nestedCategory.name].percentChange.toFixed(2)}}%
+                    </div>
                 </div>
             </mat-expansion-panel-header>
 
@@ -20,15 +24,17 @@
 
     <div *ngIf="category.stocks && stockMetrics" style="display: flex;flex-direction: column;">
         <div *ngFor='let stock of category.stocks'>
-            <div *ngIf="stockMetrics[stock.symbol]" style="display: flex;flex-direction: row;">
-                <div style="margin-right: auto;">
+            <div class="stock-info-container" *ngIf="stockMetrics[stock.symbol]">
+                <div class="stock-name-label">
                     {{stock.symbol}}
                 </div>
-                <div *ngIf="!edit">
-                    {{stockMetrics[stock.symbol].percentOfCategory.toFixed(2)}}%
-                    {{stockMetrics[stock.symbol].percentChange.toFixed(2)}}%
+                <div class="stock-percent-label" *ngIf="!edit">
+                    {{stockMetrics[stock.symbol].percentOfCategory.toFixed(2)}}% ({{stock.desiredAmount}}%)
+                    <input *ngIf="edit" matInput [value]="stock.desiredAmount" />
                 </div>
-                <input *ngIf="edit" matInput [value]="stock.desiredAmount" />
+                <div [class]="'stock-change-label ' + (stockMetrics[stock.symbol].percentChange > 0 ? 'green' : 'red')">
+                    {{stockMetrics[stock.symbol].percentChange > 0 ? '+' : '' }}{{stockMetrics[stock.symbol].percentChange.toFixed(2)}}%
+                </div>
             </div>
 
             <!-- This is where stock data would be! -->
