@@ -2,7 +2,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 
-import { Portfolio, Quote, StockHistory } from 'src/app/models/models';
+import { Portfolio, Quote, StockHistory, Category } from 'src/app/models/models';
 
 @Component({
   selector: 'app-dashboard',
@@ -34,8 +34,34 @@ export class DashboardComponent implements OnInit {
     this.getPortfolios();
   }
 
-  save() {
+  async save() {
     // eventually save
+
+    const cleanCategory = (cat: Category) => {
+      return {
+        name: cat.name,
+        categories: cat.categories ? cat.categories.map(cleanCategory) : [],
+        stocks: cat.stocks
+      };
+    };
+
+    const portfolioId = '5d80d0587d2d4657d8e1fe8f';
+    const data = await this.http.put(`http://localhost/PortfolioTrackerApi/api/portfolios/${portfolioId}`, {
+      id: portfolioId,
+      name: this.portfolio.name,
+      categories: this.portfolio.categories ? this.portfolio.categories.map(cleanCategory) : [],
+      stocks: this.portfolio.stocks
+    }).toPromise();
+
+    this.portfolio = data.json();
+
+    const quotes = this.getQuotes();
+    const history = this.getHistory();
+
+    await quotes;
+    await history;
+
+    this.getPercentChange();
   }
 
   get absValueChange(): number { return Math.abs(this.valueChange); }

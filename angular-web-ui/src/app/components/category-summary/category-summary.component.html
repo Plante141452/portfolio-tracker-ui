@@ -33,7 +33,7 @@
                     <div *ngIf="!edit">
                         {{stockMetrics[stock.symbol].percentOfCategory.toFixed(2)}}% ({{stock.desiredAmount}}%)
                     </div>
-                    <input *ngIf="edit" matInput [value]="stock.desiredAmount" />
+                    <input *ngIf="edit" matInput [(ngModel)]="stock.desiredAmount" />
                 </div>
                 <div [class]="'stock-change-label ' + (stockMetrics[stock.symbol].percentChange > 0 ? 'green' : 'red')">
                     {{stockMetrics[stock.symbol].percentChange > 0 ? '+' : '' }}{{stockMetrics[stock.symbol].percentChange.toFixed(2)}}%
