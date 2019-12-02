@@ -9,8 +9,8 @@
     <div *ngIf="currentValue" class="current-value-label">
         ${{currentValue.toFixed(2)}}
     </div>
-    <div *ngIf="valueChange" [class]="'value-change-label ' + (currentValue > 0 ? 'green' : 'red')">
-        {{valueChange > 0 ? '+' : '' }}${{valueChange.toFixed(2)}}
+    <div *ngIf="valueChange" [class]="'value-change-label ' + (valueChange > 0 ? 'green' : 'red')">
+        {{valueChange > 0 ? '+' : '-' }}${{ absValueChange.toFixed(2) }}
     </div>
     <div *ngIf="percentChange" [class]="'percent-change-label ' + (percentChange > 0 ? 'green' : 'red')">
         {{percentChange > 0 ? '+' : '' }}{{(percentChange* 100).toFixed(2)}}%

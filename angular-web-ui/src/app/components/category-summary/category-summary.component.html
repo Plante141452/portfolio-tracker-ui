@@ -9,7 +9,8 @@
                     <div class="category-percent-label">
                         {{categoryMetrics[nestedCategory.name].percentOfCategory.toFixed(2)}}%
                     </div>
-                    <div [class]="'category-change-label ' + (categoryMetrics[nestedCategory.name].percentChange > 0 ? 'green' : 'red')">
+                    <div
+                        [class]="'category-change-label ' + (categoryMetrics[nestedCategory.name].percentChange > 0 ? 'green' : 'red')">
                         {{categoryMetrics[nestedCategory.name].percentChange > 0 ? '+' : '' }}{{categoryMetrics[nestedCategory.name].percentChange.toFixed(2)}}%
                     </div>
                 </div>
@@ -28,8 +29,10 @@
                 <div class="stock-name-label">
                     {{stock.symbol}}
                 </div>
-                <div class="stock-percent-label" *ngIf="!edit">
-                    {{stockMetrics[stock.symbol].percentOfCategory.toFixed(2)}}% ({{stock.desiredAmount}}%)
+                <div class="stock-percent-label">
+                    <div *ngIf="!edit">
+                        {{stockMetrics[stock.symbol].percentOfCategory.toFixed(2)}}% ({{stock.desiredAmount}}%)
+                    </div>
                     <input *ngIf="edit" matInput [value]="stock.desiredAmount" />
                 </div>
                 <div [class]="'stock-change-label ' + (stockMetrics[stock.symbol].percentChange > 0 ? 'green' : 'red')">

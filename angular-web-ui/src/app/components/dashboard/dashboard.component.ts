@@ -38,6 +38,8 @@ export class DashboardComponent implements OnInit {
     // eventually save
   }
 
+  get absValueChange(): number { return Math.abs(this.valueChange); }
+
   async rebalance() {
     const portfolioId = '5d80d0587d2d4657d8e1fe8f';
     const data = await this.http.get(`http://localhost/PortfolioTrackerApi/api/portfolios/${portfolioId}/rebalance`).toPromise();
@@ -59,7 +61,7 @@ export class DashboardComponent implements OnInit {
 
     this.portfolio = data.json();
 
-    const quotes = await this.getQuotes();
+    const quotes = this.getQuotes();
     const history = this.getHistory();
 
     await quotes;
