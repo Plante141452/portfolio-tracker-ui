@@ -55,6 +55,8 @@ export class DashboardComponent implements OnInit {
 
     this.portfolio = data.json();
 
+    console.log(`Total allocated percent: ${this.portfolio.allStocks.map(s => s.desiredAmount).reduce((a1, a2) => a1 + a2)}`);
+
     const quotes = this.getQuotes();
     const history = this.getHistory();
 
