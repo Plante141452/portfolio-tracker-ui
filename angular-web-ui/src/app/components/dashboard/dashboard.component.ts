@@ -50,7 +50,8 @@ export class DashboardComponent implements OnInit {
       id: portfolioId,
       name: this.portfolio.name,
       categories: this.portfolio.categories ? this.portfolio.categories.map(cleanCategory) : [],
-      stocks: this.portfolio.stocks
+      stocks: this.portfolio.stocks,
+      cashOnHand: this.portfolio.cashOnHand
     }).toPromise();
 
     this.portfolio = data.json();
