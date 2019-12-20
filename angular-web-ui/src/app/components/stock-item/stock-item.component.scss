@@ -1,0 +1,23 @@
+stock-item {
+  .stock-name-label {
+    font-size: large;
+    grid-row: 1 / span 2;
+
+    align-self: center;
+  }
+
+  .stock-percent-label {
+    grid-row: 2;
+    grid-column: 2;
+
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .stock-change-label {
+    grid-row: 1;
+    grid-column: 2;
+
+    text-align: right;
+  }
+}

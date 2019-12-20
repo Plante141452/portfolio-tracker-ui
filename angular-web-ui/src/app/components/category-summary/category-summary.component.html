@@ -23,25 +23,8 @@
         </mat-expansion-panel>
     </div>
 
-    <div *ngIf="category.stocks && stockMetrics" style="display: flex;flex-direction: column;">
-        <div *ngFor='let stock of category.stocks'>
-            <div class="stock-info-container" *ngIf="stockMetrics[stock.symbol]">
-                <div class="stock-name-label">
-                    {{stock.symbol}}
-                </div>
-                <div class="stock-percent-label">
-                    <div *ngIf="!edit">
-                        {{stockMetrics[stock.symbol].percentOfCategory.toFixed(2)}}% ({{stock.desiredAmount}}%)
-                    </div>
-                    <input *ngIf="edit" matInput [(ngModel)]="stock.desiredAmount" />
-                </div>
-                <div [class]="'stock-change-label ' + (stockMetrics[stock.symbol].percentChange > 0 ? 'green' : 'red')">
-                    {{stockMetrics[stock.symbol].percentChange > 0 ? '+' : '' }}{{stockMetrics[stock.symbol].percentChange.toFixed(2)}}%
-                </div>
-            </div>
-
-            <!-- This is where stock data would be! -->
-
-        </div>
+    <div *ngIf="stockData" style="display: flex;flex-direction: column;">
+        <stock-item [stockData]="stock" *ngFor="let stock of categoryStockData">
+        </stock-item>
     </div>
 </mat-accordion>

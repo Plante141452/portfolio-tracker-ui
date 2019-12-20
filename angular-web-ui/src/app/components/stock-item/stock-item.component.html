@@ -1,0 +1,14 @@
+<div class="stock-info-container">
+    <div class="stock-name-label">
+        {{stockData.stock.symbol}}
+    </div>
+    <div class="stock-percent-label">
+        <div *ngIf="!edit">
+            {{stockData.metric.percentOfCategory.toFixed(2)}}% ({{stockData.stock.desiredAmount}}%)
+        </div>
+        <input *ngIf="edit" matInput [(ngModel)]="stockData.stock.desiredAmount" />
+    </div>
+    <div [class]="'stock-change-label ' + (stockData.metric.percentChange > 0 ? 'green' : 'red')">
+        {{stockData.metric.percentChange > 0 ? '+' : '' }}{{stockData.metric.percentChange.toFixed(2)}}%
+    </div>
+</div>

@@ -7,14 +7,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { CategorySummaryComponent, DashboardComponent } from './components/components';
+import { CategorySummaryComponent, DashboardComponent, RebalancerComponent, StockItemComponent } from './components/components';
 import { AppMaterialModule } from './app-material.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     CategorySummaryComponent,
-    DashboardComponent
+    DashboardComponent,
+    RebalancerComponent,
+    StockItemComponent
   ],
   imports: [
     BrowserModule,
