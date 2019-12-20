@@ -5,3 +5,6 @@ export * from './quote';
 export * from './stock-allocation';
 export * from './stock-history';
 export * from './stock-history-item';
+export * from './metric';
+export * from './stock-metric';
+export * from './category-metric';

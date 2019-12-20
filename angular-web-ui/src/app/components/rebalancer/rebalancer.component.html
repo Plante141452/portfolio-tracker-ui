@@ -1,0 +1,27 @@
+<div *ngIf="!edit" style='display: flex;'>
+    <div style="margin-left: auto">
+        <button mat-button (click)="mode = 'Y';update();">Y</button>
+        <button mat-button (click)="mode = 'M';update();">M</button>
+        <button mat-button (click)="mode = 'W';update();">W</button>
+    </div>
+</div>
+<div class="portfolio-info-container">
+    <div *ngIf="currentValue" class="current-value-label">
+        ${{currentValue.toFixed(2)}}
+    </div>
+    <div *ngIf="valueChange" [class]="'value-change-label ' + (valueChange > 0 ? 'green' : 'red')">
+        {{valueChange > 0 ? '+' : '-' }}${{ absValueChange.toFixed(2) }}
+    </div>
+    <div *ngIf="percentChange" [class]="'percent-change-label ' + (percentChange > 0 ? 'green' : 'red')">
+        {{percentChange > 0 ? '+' : '' }}{{(percentChange* 100).toFixed(2)}}%
+    </div>
+</div>
+<div>
+    <app-category-summary [category]="portfolio" [quotes]="quotes" [stockHistory]="history" [edit]="edit" [mode]="mode">
+    </app-category-summary>
+    <button *ngIf="!edit" mat-button (click)="edit = !edit;">Edit</button>
+    <button *ngIf="!edit" mat-button (click)="rebalance()">Rebalance</button>
+    <button *ngIf="!edit" mat-button (click)="update()">Update</button>
+    <button *ngIf="edit" mat-button (click)="edit = !edit;save();">Save</button>
+    <button *ngIf="edit" mat-button (click)="edit = !edit;">Cancel</button>
+</div>
