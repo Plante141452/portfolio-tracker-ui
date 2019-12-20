@@ -3,10 +3,10 @@ import { StockAllocation, Quote, StockMetric, StockHistory } from 'src/app/model
 
 
 export interface StockData {
-  stock: StockAllocation,
-  quote: Quote,
-  metric: StockMetric,
-  history: StockHistory
+  stock: StockAllocation;
+  quote: Quote;
+  metric: StockMetric;
+  history: StockHistory;
 }
 
 @Component({
@@ -22,7 +22,6 @@ export class StockItemComponent implements OnInit {
   // tslint:enable:variable-name
 
   @Input() edit: boolean;
-  @Input() mode: string;
 
   get stockData(): StockData { return this._stockData; }
   @Input() set stockData(value: StockData) {

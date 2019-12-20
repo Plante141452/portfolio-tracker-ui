@@ -1,8 +1,9 @@
 <div *ngIf="!edit" style='display: flex;'>
     <div style="margin-left: auto">
-        <button mat-button (click)="mode = 'Y';update();">Y</button>
-        <button mat-button (click)="mode = 'M';update();">M</button>
-        <button mat-button (click)="mode = 'W';update();">W</button>
+        <button mat-button (click)="setCadence('1Y');update();">1Y</button>
+        <button mat-button (click)="setCadence('3M');update();">3M</button>
+        <button mat-button (click)="setCadence('1M');update();">1M</button>
+        <button mat-button (click)="setCadence('1W');update();">1W</button>
     </div>
 </div>
 <div class="portfolio-info-container">
@@ -17,8 +18,9 @@
     </div>
 </div>
 <div>
-    <app-category-summary [category]="portfolio" [quotes]="quotes" [stockHistory]="history" [edit]="edit" [mode]="mode">
-    </app-category-summary>
+    <category-summary [category]="portfolio" [quotes]="quotes" [stockHistory]="history" [edit]="edit"
+        [cadence]="cadence">
+    </category-summary>
     <button *ngIf="!edit" mat-button (click)="edit = !edit;">Edit</button>
     <button *ngIf="!edit" mat-button (click)="rebalance()">Rebalance</button>
     <button *ngIf="!edit" mat-button (click)="update()">Update</button>

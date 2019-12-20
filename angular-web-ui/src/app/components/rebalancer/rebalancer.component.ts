@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { Router } from '@angular/router';
 
 import { Portfolio, Quote, StockHistory, Category } from 'src/app/models/models';
+import { CadenceEnum } from '../dashboard/dashboard.component';
 
 @Component({
   selector: 'app-rebalancer',
@@ -21,7 +22,7 @@ export class RebalancerComponent implements OnInit {
 
   edit: boolean;
 
-  mode = 'W';
+  cadence: CadenceEnum = CadenceEnum.Weekly;
 
   constructor(private http: Http, private router: Router) {
   }
@@ -105,9 +106,9 @@ export class RebalancerComponent implements OnInit {
       const quote = this.quotes.find(q => q.symbol === stock.symbol);
       let previousPrice = 0;
 
-      if (this.mode === 'W') {
+      if (this.cadence === CadenceEnum.Weekly) {
         previousPrice = stockHistory.history[0].adjustedClose;
-      } else if (this.mode === 'M') {
+      } else if (this.cadence === CadenceEnum.Monthly) {
         const index = 3 > stockHistory.history.length ? stockHistory.history.length - 1 : 3;
         previousPrice = stockHistory.history[index].adjustedClose;
       } else {

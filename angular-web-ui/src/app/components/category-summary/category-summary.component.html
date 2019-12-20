@@ -16,15 +16,15 @@
                 </div>
             </mat-expansion-panel-header>
 
-            <app-category-summary [category]="nestedCategory" [quotes]="quotes" [stockHistory]="stockHistory"
-                [edit]="edit" [mode]="mode">
-            </app-category-summary>
+            <category-summary [category]="nestedCategory" [quotes]="quotes" [stockHistory]="stockHistory" [edit]="edit"
+                [cadence]="cadence">
+            </category-summary>
 
         </mat-expansion-panel>
     </div>
 
     <div *ngIf="stockData" style="display: flex;flex-direction: column;">
-        <stock-item [stockData]="stock" *ngFor="let stock of categoryStockData">
+        <stock-item [stockData]="stock" [edit]="edit" *ngFor="let stock of categoryStockData">
         </stock-item>
     </div>
 </mat-accordion>

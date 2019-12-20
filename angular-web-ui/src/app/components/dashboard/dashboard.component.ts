@@ -4,6 +4,19 @@ import { Router } from '@angular/router';
 
 import { Portfolio, Quote, StockHistory, Category } from 'src/app/models/models';
 
+export enum CadenceEnum {
+  Weekly,
+  Monthly,
+  Quarterly,
+  Yearly
+}
+
+export enum ModeEnum {
+  View,
+  Edit,
+  Rebalance
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -19,11 +32,10 @@ export class DashboardComponent implements OnInit {
   valueChange: number;
   percentChange: number;
 
-  edit: boolean;
+  cadence: CadenceEnum = CadenceEnum.Weekly;
+  mode: ModeEnum = ModeEnum.View;
 
-  mode = 'W';
-
-  constructor(private http: Http, private router: Router) {
+  constructor(private http: Http) {
   }
 
   ngOnInit() {
@@ -99,6 +111,35 @@ export class DashboardComponent implements OnInit {
     this.getPercentChange();
   }
 
+  get edit(): boolean {
+    return this.mode === ModeEnum.Edit;
+  }
+
+  set edit(value: boolean) {
+    if (value) {
+      this.mode = ModeEnum.Edit;
+    } else {
+      this.mode = ModeEnum.View;
+    }
+  }
+
+  setCadence(cadence: string) {
+    switch (cadence) {
+      case '1W':
+        this.cadence = CadenceEnum.Weekly;
+        break;
+      case '1M':
+        this.cadence = CadenceEnum.Monthly;
+        break;
+      case '3M':
+        this.cadence = CadenceEnum.Quarterly;
+        break;
+      case '1Y':
+        this.cadence = CadenceEnum.Yearly;
+        break;
+    }
+  }
+
   getPercentChange() {
     this.currentValue = 0;
     let previousValue = 0;
@@ -108,10 +149,13 @@ export class DashboardComponent implements OnInit {
       const quote = this.quotes.find(q => q.symbol === stock.symbol);
       let previousPrice = 0;
 
-      if (this.mode === 'W') {
+      if (this.cadence === CadenceEnum.Weekly) {
         previousPrice = stockHistory.history[0].adjustedClose;
-      } else if (this.mode === 'M') {
+      } else if (this.cadence === CadenceEnum.Monthly) {
         const index = 3 > stockHistory.history.length ? stockHistory.history.length - 1 : 3;
+        previousPrice = stockHistory.history[index].adjustedClose;
+      } else if (this.cadence === CadenceEnum.Quarterly) {
+        const index = 11 > stockHistory.history.length ? stockHistory.history.length - 1 : 11;
         previousPrice = stockHistory.history[index].adjustedClose;
       } else {
         const index = 51 > stockHistory.history.length ? stockHistory.history.length - 1 : 51;

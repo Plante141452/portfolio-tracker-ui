@@ -17,8 +17,9 @@
     </div>
 </div>
 <div>
-    <app-category-summary [category]="portfolio" [quotes]="quotes" [stockHistory]="history" [edit]="edit" [mode]="mode">
-    </app-category-summary>
+    <category-summary [category]="portfolio" [quotes]="quotes" [stockHistory]="history" [edit]="edit"
+        [cadence]="cadence">
+    </category-summary>
     <button *ngIf="!edit" mat-button (click)="edit = !edit;">Edit</button>
     <button *ngIf="!edit" mat-button (click)="rebalance()">Rebalance</button>
     <button *ngIf="!edit" mat-button (click)="update()">Update</button>
