@@ -74,7 +74,7 @@ export class CategorySummaryComponent implements OnInit {
         previousPrice,
         currentValue: stock.currentShares * quote.price,
         previousValue: stock.currentShares * previousPrice,
-        percentChange: (quote.price / previousPrice - 1) * 100,
+        percentChange: ((quote.price / previousPrice) - 1) * 100,
         percentOfCategory: undefined
       };
 
@@ -96,7 +96,7 @@ export class CategorySummaryComponent implements OnInit {
 
       const currentValue = categoryStocks.map(cs => cs.currentValue).reduce((v1, v2) => v1 + v2);
       const previousValue = categoryStocks.map(cs => cs.previousValue).reduce((v1, v2) => v1 + v2);
-      const percentChange = (currentValue / previousValue - 1) * 100;
+      const percentChange = ((currentValue / previousValue) - 1) * 100;
 
       this.categoryMetrics[category.name] = {
         category,

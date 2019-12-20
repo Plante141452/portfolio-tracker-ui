@@ -13,7 +13,7 @@
         {{valueChange > 0 ? '+' : '-' }}${{ absValueChange.toFixed(2) }}
     </div>
     <div *ngIf="percentChange" [class]="'percent-change-label ' + (percentChange > 0 ? 'green' : 'red')">
-        {{percentChange > 0 ? '+' : '' }}{{(percentChange* 100).toFixed(2)}}%
+        {{percentChange > 0 ? '+' : '' }}{{(percentChange).toFixed(2)}}%
     </div>
 </div>
 <div>

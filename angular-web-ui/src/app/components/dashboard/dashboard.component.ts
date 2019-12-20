@@ -123,7 +123,7 @@ export class DashboardComponent implements OnInit {
     }
 
     this.valueChange = this.currentValue - previousValue;
-    this.percentChange = (this.currentValue / previousValue) - 1;
+    this.percentChange = ((this.currentValue / previousValue) - 1) * 100;
   }
 
   async getQuotes() {
