@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
     };
 
     const portfolioId = '5d80d0587d2d4657d8e1fe8f';
-    const data = await this.http.put(`http://localhost/PortfolioTrackerApi/api/portfolios/${portfolioId}`, {
+    const data = await this.http.put(`http://localhost/PortfolioTrackerApi2/api/portfolios/${portfolioId}`, {
       id: portfolioId,
       name: this.portfolio.name,
       categories: this.portfolio.categories ? this.portfolio.categories.map(cleanCategory) : [],
@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit {
       cashOnHand: this.portfolio.cashOnHand
     }).toPromise();
 
-    this.portfolio = data.json();
+    this.portfolio = data.json().data;
 
     console.log(`Total allocated percent: ${this.portfolio.allStocks.map(s => s.desiredAmount).reduce((a1, a2) => a1 + a2)}`);
 
@@ -83,8 +83,8 @@ export class DashboardComponent implements OnInit {
 
   async rebalance() {
     const portfolioId = '5d80d0587d2d4657d8e1fe8f';
-    const data = await this.http.get(`http://localhost/PortfolioTrackerApi/api/portfolios/${portfolioId}/rebalance`).toPromise();
-    const results: any = data.json();
+    const data = await this.http.get(`http://localhost/PortfolioTrackerApi2/api/portfolios/${portfolioId}/rebalance`).toPromise();
+    const results: any = data.json().data;
     const actions = results.actions.filter(d => d.amount > 1).map(d => {
       return {
         symbol: d.symbol,
@@ -98,9 +98,9 @@ export class DashboardComponent implements OnInit {
 
   async getPortfolios() {
     const portfolioId = '5d80d0587d2d4657d8e1fe8f';
-    const data = await this.http.get(`http://localhost/PortfolioTrackerApi/api/portfolios/${portfolioId}`).toPromise();
+    const data = await this.http.get(`http://localhost/PortfolioTrackerApi2/api/portfolios/${portfolioId}`).toPromise();
 
-    this.portfolio = data.json();
+    this.portfolio = data.json().data;
 
     const quotes = this.getQuotes();
     const history = this.getHistory();
@@ -174,16 +174,16 @@ export class DashboardComponent implements OnInit {
     const symbols = this.portfolio.allStocks.map(s => s.symbol).filter((v, i, a) => a.indexOf(v) === i);
     const symbolsString = symbols.reduce((s1, s2) => `${s1},${s2}`);
 
-    const data = await this.http.get(`http://localhost/PortfolioTrackerApi/api/quotes?symbols=${symbolsString}`).toPromise();
-    this.quotes = data.json();
+    const data = await this.http.get(`http://localhost/PortfolioTrackerApi2/api/quotes?symbols=${symbolsString}`).toPromise();
+    this.quotes = data.json().data;
   }
 
   async getHistory() {
     const symbols = this.portfolio.allStocks.map(s => s.symbol).filter((v, i, a) => a.indexOf(v) === i);
     const symbolsString = symbols.reduce((s1, s2) => `${s1},${s2}`);
 
-    const data = await this.http.get(`http://localhost/PortfolioTrackerApi/api/stocks?symbols=${symbolsString}`).toPromise();
-    this.history = data.json();
+    const data = await this.http.get(`http://localhost/PortfolioTrackerApi2/api/stocks?symbols=${symbolsString}`).toPromise();
+    this.history = data.json().data;
   }
 }
 
