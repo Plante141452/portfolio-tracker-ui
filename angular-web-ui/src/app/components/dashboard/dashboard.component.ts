@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
       stocks: this.portfolio.stocks
     }).toPromise();
 
-    this.portfolio = data.json();
+    this.portfolio = data.json().data;
 
     const quotes = this.getQuotes();
     const history = this.getHistory();
@@ -69,7 +69,7 @@ export class DashboardComponent implements OnInit {
   async rebalance() {
     const portfolioId = '5d80d0587d2d4657d8e1fe8f';
     const data = await this.http.get(`http://localhost/PortfolioTrackerApi/api/portfolios/${portfolioId}/rebalance`).toPromise();
-    const results: any = data.json();
+    const results: any = data.json().data;
     const actions = results.actions.filter(d => d.amount > 1).map(d => {
       return {
         symbol: d.symbol,
@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit {
     const portfolioId = '5d80d0587d2d4657d8e1fe8f';
     const data = await this.http.get(`http://localhost/PortfolioTrackerApi/api/portfolios/${portfolioId}`).toPromise();
 
-    this.portfolio = data.json();
+    this.portfolio = data.json().data;
 
     const quotes = this.getQuotes();
     const history = this.getHistory();
@@ -128,7 +128,7 @@ export class DashboardComponent implements OnInit {
     const symbolsString = symbols.reduce((s1, s2) => `${s1},${s2}`);
 
     const data = await this.http.get(`http://localhost/PortfolioTrackerApi/api/quotes?symbols=${symbolsString}`).toPromise();
-    this.quotes = data.json();
+    this.quotes = data.json().data;
   }
 
   async getHistory() {
@@ -136,7 +136,7 @@ export class DashboardComponent implements OnInit {
     const symbolsString = symbols.reduce((s1, s2) => `${s1},${s2}`);
 
     const data = await this.http.get(`http://localhost/PortfolioTrackerApi/api/stocks?symbols=${symbolsString}`).toPromise();
-    this.history = data.json();
+    this.history = data.json().data;
   }
 }
 
